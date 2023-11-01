@@ -2,6 +2,14 @@ a {
     text-decoration: none;
     color: currentColor;
 }
+header {
+    position: fixed;
+    top: 0;
+    width: 100vw;
+}
+main, .group-auth-btn {
+    margin-top: 100px;
+}
 .nav-brand{
     height: 60px;
 }
@@ -34,4 +42,12 @@ a {
 .cell-center {
     text-align: center;
     vertical-align: middle;
+}
+.btn-icon {
+    cursor: pointer;
+}
+.btn-icon:hover {
+    background-color: #cacccfd5;
+    border-radius: 5px;
+    padding: 3px 5px;
 }

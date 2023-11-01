@@ -10,13 +10,33 @@
     <link rel="icon" href="./assets/icons/control-de-calidad.png" type="image/png">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
     <link rel="stylesheet" href="./assets/css/style.css">
+    <script src="./code/credential.js"></script>
 </head>
 
 <body id="home">
     <header class="bg-dark text-white p-2" id="navbar">
 
     </header>
-    <main hidden>
+    <main id="test" hidden>
+        <!-- Modal -->
+        <div class="modal fade" id="Modal"  data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="ModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog" style="max-width: 1000px;">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="ModalLabel">Edición</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                    <button type="button" class="btn btn-primary">Guardar cambios</button>
+                </div>
+            </div>
+        </div>
+    </div>
         <div class="container-fluid mt-3">
             <h1 class="text-center my-4 display-5">Gestión de Acciones</h1>
             <h2 class="text-center my-4 display-6">Ultimas 10 creadas</h2>
@@ -27,16 +47,17 @@
                         <input type="text" class="form-control" id="find_by_id">
                     </div>
                 </div>
+        
                 <div class="col-md-3 col-12">
                     <div class="input-group mb-3">
                         <label class="input-group-text" for="find_by_type_of_action">Tipo de acción</label>
                         <select class="form-select" id="find_by_type_of_action">
-                          <option selected value=""></option>
-                          <option value="No conformidad">No conformidad</option>
-                          <option value="Oportunidad de mejora">Oportunidad de mejora</option>
-                          <option value="Acción frente al riesgo">Acción frente al riesgo</option>
+                            <option selected value=""></option>
+                            <option value="No conformidad">No conformidad</option>
+                            <option value="Oportunidad de mejora">Oportunidad de mejora</option>
+                            <option value="Acción frente al riesgo">Acción frente al riesgo</option>
                         </select>
-                      </div>
+                    </div>
                 </div>
                 <div class="col-md-3 col-12">
                     <div class="input-group mb-3">
@@ -59,7 +80,7 @@
                     <tr>
                         <th>Id</th>
                         <th>Fecha</th>
-                        <th style="width: 9rem;">Tipo de acción</th>
+                        <th style="width: 12rem;">Tipo de acción</th>
                         <th style="width: 10rem;">Área o Proceso</th>
                         <th style="min-width: 500px;">Descripción</th>
                         <th>Gestionar</th>
@@ -68,120 +89,33 @@
                 <tbody id="table_accion">
                 </tbody>
             </table>
-            <div class="btn-group" role="group" aria-label="Basic example" id="pagination">
-                <button type="button" class="btn btn-outline-dark" id="prevPage" disabled>Anterior</button>
-                <button type="button" class="btn btn-outline-dark" id="nextPage">Siguiente</button>
-              </div>
-            <!-- <div class="row">
-                <div class="col-lg-6 col-12 my-3">
-                    <div class="row">
-                        <h3>Declaración & Análisis</h3>
-                    </div>
-                    <form class="mt-3">
-                        <select class="form-select mb-2" id="tipo_accion" required>
-                            <option selected>Tipo de acción</option>
-                            <option value="No conformidad">No conformidad</option>
-                            <option value="Oportunidad de mejora">Oportunidad de mejora</option>
-                            <option value="Acción frente al riesgo">Acción frente al riesgo</option>
-                        </select>
-                        <select class="form-select mb-2" id="area_proceso" required>
-                            <option selected>Área o Proceso</option>
-                        </select>
-                        <textarea class="form-control mb-2" id="descripcion" rows="3"
-                            placeholder="Describa la situación" required></textarea>
-                        <textarea class="form-control mb-2" id="causa_raiz" rows="3" placeholder="Indique la causa raíz"
-                            required></textarea>
-                        <textarea class="form-control mb-2" id="impacto" rows="2"
-                            placeholder="Impacto en el cliente y en el S.G.C"></textarea>
-                        <select class="form-select mb-2" id="elaboro" required>
-                            <option selected>Elaboró</option>
-                        </select>
-                    </form>
+            <div class="d-flex justify-content-between">
+                <div class="btn-group" role="group" aria-label="Basic example" id="pagination">
+                    <button type="button" class="btn btn-outline-dark" id="prevPage" disabled>Anterior</button>
+                    <button type="button" class="btn btn-outline-dark" id="nextPage">Siguiente</button>
                 </div>
-                <div class="col-lg-6 col-12">
-                    <div class="row">
-                        <div class="col-12 my-3">
-                            <div class="d-flex justify-content-between">
-                                <h3 class="text">Plan de acción</h3>
-                                <button type="button" class="btn btn-outline-dark">
-                                    <i class="bi bi-plus-lg"></i>
-                                </button>
-                            </div>
-                            <form class="mt-3">
-                                <div class="col">
-                                    <p class="lead"><strong>Acción Planificada 1</strong></p>
-                                    <textarea class="form-control mb-2" id="accion_a_tomar_1" rows="2"
-                                        placeholder="Acción a tomar" required></textarea>
-                                    <select class="form-select mb-2" id="responsable_ac_1" required>
-                                        <option selected>Responsable</option>
-                                    </select>
-                                </div>
-                            </form>
-                        </div>
-                        <div class="col-12 my-3">
-                            <div class="d-flex justify-content-between">
-                                <h3 class="text">Acción & Verificación</h3>
-                                <button type="button" class="btn btn-outline-dark">
-                                    <i class="bi bi-plus-lg"></i>
-                                </button>
-                            </div>
-                            <form class="mt-3">
-                                <div class="col">
-                                    <p class="lead"><strong>Acción Tomada 1</strong></p>
-                                    <textarea class="form-control mb-2" id="accion_tomada_1" rows="2"
-                                        placeholder="Ación tomada" required></textarea>
-                                    <select class="form-select mb-2" id="responsable_act_1" required>
-                                        <option selected>Responsable</option>
-                                    </select>
-                                    <textarea class="form-control mb-2" id="resultado_act_1" rows="2"
-                                        placeholder="Resultado de verificación" required></textarea>
-                                </div>
-                                <div class="col">
-                                    <p class="lead"><strong>Acción Tomada 2</strong></p>
-                                    <textarea class="form-control mb-2" id="accion_tomada_2" rows="2"
-                                        placeholder="Ación tomada" required></textarea>
-                                    <select class="form-select mb-2" id="responsable_act_2" required>
-                                        <option selected>Responsable</option>
-                                    </select>
-                                    <textarea class="form-control mb-2" id="resultado_act_2" rows="2"
-                                        placeholder="Resultado de verificación" required></textarea>
-                                </div>
-                            </form>
-                        </div>
-                    </div>
-                </div>
+                <strong>
+                    <p id="footPage"></p>
+                </strong>
             </div>
-            <div class="row">
-
-                <div class="col-12 my-3">
-                    <div class="row">
-                        <h3 class="text">Conslusiones</h3>
-                    </div>
-                    <form class="mt-3">
-                        <textarea class="form-control mb-2" id="evalucion_efectividad" rows="2"
-                            placeholder="Evaluación de efectividad" required></textarea>
-                        <select class="form-select mb-2" id="aprueba" required>
-                            <option selected>Aprobado por</option>
-                        </select>
-                    </form>
-                </div>
-            </div> -->
         </div>
-        
+
     </main>
     <!--Add buttons to initiate auth sequence and sign out-->
-    <div class="buttons-auth container d-flex justify-content-center mt-5">
+    <div class="buttons-auth container d-flex justify-content-center group-auth-btn">
         <button class="btn btn-primary mx-2" id="authorize_button" onclick="handleAuthClick()">Authorize</button>
         <button class="btn btn-secondary mx-2" id="signout_button" onclick="handleSignoutClick()">Sign Out</button>
     </div>
+
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
         crossorigin="anonymous"></script>
-    <script src="./code/credential.js"></script>
+
     <script src="./code/auth.js"></script>
     <script async defer src="https://apis.google.com/js/api.js" onload="gapiLoaded()"></script>
     <script async defer src="https://accounts.google.com/gsi/client" onload="gisLoaded()"></script>
     <script src="./code/main.js"></script>
+    <script src="./code/crear_ac.js"></script>
 </body>
 
 </html>
