@@ -17,7 +17,7 @@
     <header class="bg-dark text-white p-2" id="navbar">
 
     </header>
-    <main id="test" hidden>
+    <main hidden>
         <!-- Modal -->
         <div class="modal fade" id="Modal"  data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="ModalLabel"
         aria-hidden="true">
@@ -32,7 +32,7 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
-                    <button type="button" class="btn btn-primary">Guardar cambios</button>
+                    <button type="button" class="btn btn-primary" id="saveChanges">Guardar cambios</button>
                 </div>
             </div>
         </div>
@@ -116,6 +116,7 @@
     <script async defer src="https://accounts.google.com/gsi/client" onload="gisLoaded()"></script>
     <script src="./code/main.js"></script>
     <script src="./code/crear_ac.js"></script>
+    <script src="./code/update.js"></script>
 </body>
 
 </html>

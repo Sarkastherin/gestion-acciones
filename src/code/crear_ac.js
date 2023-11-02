@@ -1,5 +1,3 @@
-
-let num = 1;
 async function load(data,headers) {
     let response;
     let obj = new Object();
@@ -71,28 +69,4 @@ async function findElementById(range, id) {
     } catch (e) {
         console.log(e)
     }
-}
-function addPlanning() {
-    let form = document.getElementById('form_plan')
-    let planHTML = `
-        <div class="row mb-2">
-            <div class="col">
-                <p class="lead"><strong>Acción Planificada ${num}</strong></p>
-            </div>
-            <div class="col-auto">
-            <button type="button" class="btn btn-danger btn-sm">
-                <i class="bi bi-trash-fill"></i>
-            </button>
-            </div>
-        </div>
-        <textarea class="form-control mb-2" id="accion_a_tomar_${num}" rows="2"
-            placeholder="Acción a tomar" required></textarea>
-        <select class="form-select mb-2" id="responsable_ac_${num}" required>
-            <option selected>Responsable</option>
-        </select>`
-    let div = document.createElement('div');
-    div.setAttribute('class','col');
-    div.innerHTML=planHTML;
-    form.appendChild(div)
-    num = num + 1
 }

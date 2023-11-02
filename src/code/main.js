@@ -13,6 +13,7 @@ let dataReverse;
 let cantPag;
 let headersDeclaracion;
 let areas;
+let idToEdit;
 function loadNavbar() {
   navbar.innerHTML = `
     <nav class="d-flex justify-content-between">
@@ -140,7 +141,7 @@ async function editAct(event) {
       return item[0]===id
     })
     dataFromId = dataFromId[0]
-    console.log(dataFromId)
+    idToEdit = dataFromId[0]
     await load(dataFromId, headersDeclaracion)
   } catch (e) {
   }
