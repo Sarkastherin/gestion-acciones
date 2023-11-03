@@ -4,7 +4,7 @@ const nameIdModule = module[0].attributes.id.nodeValue;
 const content = document.querySelector('main');
 const rangoDeclaracion = 'DECLARACIÓN & ANÁLISIS!A1:H';
 const rangoUsuarios = 'USUARIOS!A1:E';
-const rangoAreas = 'ÁREAS!A1:B';
+const rangoAreas = 'AREAS!A1:B';
 const tableActions = document.getElementById('table_accion');
 const prevButton = document.getElementById('prevPage');
 const nextButton = document.getElementById('nextPage');
@@ -43,10 +43,31 @@ async function loadedResourses(range) {
     error_400(code)
   }
 }
+async function postData(range, data) {
+  try {
+      let response = await gapi.client.sheets.spreadsheets.values.append({
+          spreadsheetId: spreadsheetId,
+          range: range,
+          includeValuesInResponse: true,
+          insertDataOption: "INSERT_ROWS",
+          responseDateTimeRenderOption: "FORMATTED_STRING",
+          responseValueRenderOption: "FORMATTED_VALUE",
+          valueInputOption: "USER_ENTERED",
+          resource: {
+              majorDimension: "ROWS",
+              range: "",
+              values: [
+                  data
+              ]
+          }
+      })
+  } catch (e) {
+    
+  }
+}
 const itemsPerPage = 10;
 let currentPage = 0;
 async function loadedWindow() {
-  //await load()
   content.removeAttribute('hidden', '');
   try {
     let data = await loadedResourses(rangoDeclaracion);

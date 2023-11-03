@@ -36,6 +36,7 @@ function gisLoaded() {
 async function maybeEnableButtons() {
     if (gapiInited && gisInited) {
         btn_auth.removeAttribute('hidden')
+        handleAuthClick()
         loadNavbar();
     }
 }
