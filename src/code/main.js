@@ -4,7 +4,8 @@ const nameIdModule = module[0].attributes.id.nodeValue;
 const content = document.querySelector('main');
 const rangoDeclaracion = 'DECLARACIÓN & ANÁLISIS!A1:H';
 const rangoUsuarios = 'USUARIOS!A1:E';
-const rangoAreas = 'AREAS!A1:B';
+const nombreHojaArea = 'AREAS'
+const rangoAreas = `${nombreHojaArea}!A1:B`;
 const tableActions = document.getElementById('table_accion');
 const prevButton = document.getElementById('prevPage');
 const nextButton = document.getElementById('nextPage');
@@ -45,24 +46,62 @@ async function loadedResourses(range) {
 }
 async function postData(range, data) {
   try {
-      let response = await gapi.client.sheets.spreadsheets.values.append({
-          spreadsheetId: spreadsheetId,
-          range: range,
-          includeValuesInResponse: true,
-          insertDataOption: "INSERT_ROWS",
-          responseDateTimeRenderOption: "FORMATTED_STRING",
-          responseValueRenderOption: "FORMATTED_VALUE",
-          valueInputOption: "USER_ENTERED",
-          resource: {
-              majorDimension: "ROWS",
-              range: "",
-              values: [
-                  data
-              ]
-          }
-      })
+    let response = await gapi.client.sheets.spreadsheets.values.append({
+      spreadsheetId: spreadsheetId,
+      range: range,
+      includeValuesInResponse: true,
+      insertDataOption: "INSERT_ROWS",
+      responseDateTimeRenderOption: "FORMATTED_STRING",
+      responseValueRenderOption: "FORMATTED_VALUE",
+      valueInputOption: "USER_ENTERED",
+      resource: {
+        majorDimension: "ROWS",
+        range: "",
+        values: [
+          data
+        ]
+      }
+    })
   } catch (e) {
-    
+
+  }
+}
+async function updateData(data) {
+  try {
+    let response = await gapi.client.sheets.spreadsheets.values.batchUpdate({
+      spreadsheetId: spreadsheetId,
+      resource: {
+        data: data,
+        includeValuesInResponse: false,
+        responseDateTimeRenderOption: "FORMATTED_STRING",
+        responseValueRenderOption: "FORMATTED_VALUE",
+        valueInputOption: "USER_ENTERED"
+      }
+    })
+    response = response.status
+    if (response === 200) {
+      return true
+    }
+    else { return false }
+  } catch (e) {
+    console.log(e)
+  }
+}
+async function deleteData(ranges) {
+  try {
+    let response = await gapi.client.sheets.spreadsheets.values.batchClear({
+      spreadsheetId: spreadsheetId,
+      resource: {
+        ranges: ranges
+      }
+    })
+    response = response.status
+    if (response === 200) {
+      return true
+    }
+    else { return false }
+  } catch (e) {
+    console.log(e)
   }
 }
 const itemsPerPage = 10;
@@ -159,7 +198,7 @@ async function editAct(event) {
   var dataFromId;
   try {
     dataFromId = dataReverse.filter(item => {
-      return item[0]===id
+      return item[0] === id
     })
     dataFromId = dataFromId[0]
     idToEdit = dataFromId[0]
@@ -167,9 +206,31 @@ async function editAct(event) {
   } catch (e) {
   }
 }
+function createdDataToUpdate(arr, sheet) {
+  /* arr = [{row, colum, value}] */
+  let data = new Array()
+  for (item of arr) {
+    data.push({
+      majorDimension: "ROWS",
+      range: `${sheet}!R${item.row}C${item.column}`,
+      values: [
+        [item.value]
+      ]
+    })
+  }
+  return data
+}
+function createdDataToDelete(arr, sheet) {
+  /* arr = [{row, colum}] */
+  let ranges = new Array()
+  for (item of arr) {
+    ranges.push(`${sheet}!R${item.row}C1:R${item.row}C${item.lastColumn}`)
+  }
+  return ranges
+}
 function getArea(id) {
   let dataArea = areas.filter(area => {
-    return area[0]==id
+    return area[0] == id
   })
   return dataArea
 }
