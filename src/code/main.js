@@ -2,10 +2,14 @@ const navbar = document.querySelector('#navbar')
 const module = document.getElementsByTagName('body')
 const nameIdModule = module[0].attributes.id.nodeValue;
 const content = document.querySelector('main');
-const rangoDeclaracion = 'DECLARACIÓN & ANÁLISIS!A1:H';
-const rangoUsuarios = 'USUARIOS!A1:E';
+const nombreHojaDeclaracion = 'DECLARACIÓN & ANÁLISIS';
+const rangoDeclaracion = `${nombreHojaDeclaracion}!A1:H`;
+const nombreHojaUsuario = 'USUARIOS'
+const rangoUsuarios = `${nombreHojaUsuario}!A1:E`;
 const nombreHojaArea = 'AREAS'
 const rangoAreas = `${nombreHojaArea}!A1:B`;
+const nombreHojaPrograma = 'PROGRAMA DE ACCIÓN';
+const rangoPrograma = `${nombreHojaPrograma}!A1:K`;
 const tableActions = document.getElementById('table_accion');
 const prevButton = document.getElementById('prevPage');
 const nextButton = document.getElementById('nextPage');
@@ -108,6 +112,8 @@ const itemsPerPage = 10;
 let currentPage = 0;
 async function loadedWindow() {
   content.removeAttribute('hidden', '');
+  let test = await Programa.deleteById('4')
+  console.log(test)
   try {
     let data = await loadedResourses(rangoDeclaracion);
     areas = await loadedResourses(rangoAreas)
@@ -233,4 +239,51 @@ function getArea(id) {
     return area[0] == id
   })
   return dataArea
+}
+/* Funciones para el manejo de clases */
+function objectToArray(obj, arr) {
+  for (item in obj) {
+      if (arr.includes(item)) {
+      arr[arr.indexOf(item)] = obj[item]
+      }
+  }
+  return arr
+}
+function findIndexById(id, array) {
+  for (let i = 0; i < array.length; i++) {
+      if (array[i].id === id) {
+          return i; // Devuelve el índice donde se encuentra el id
+      }
+  }
+  return -2; // Si no se encuentra el id, retorna -2
+}
+function findIndexByKey(key, array) {
+  let newArray = array[0];
+  newArray = Object.keys(newArray)
+  return newArray.indexOf(key) + 1
+}
+function arrayToObject(arr) {
+  // Obtenemos los encabezados del array
+  var headers = arr[0];
+  // Creamos un nuevo array para almacenar los objetos transformados
+  var newData = [];
+  // Iteramos desde 1 para evitar el primer elemento que son los encabezados
+  for (var i = 1; i < arr.length; i++) {
+      var obj = {};
+      // Iteramos a través de cada elemento del array actual
+      for (var j = 0; j < headers.length; j++) {
+          // Usamos los encabezados como claves y asignamos los valores correspondientes
+          obj[headers[j].toLowerCase()] = arr[i][j];
+      }
+      newData.push(obj); // Agregamos el objeto al nuevo array
+  }
+  return newData; // Devolvemos el nuevo array de objetos
+}
+function getDate() {
+  let date = new Date();
+  let day = date.getDate();
+  let month = date.getMonth() + 1;
+  let year = date.getFullYear()
+  let today = `${day}/${month}/${year}`;
+  return today
 }
