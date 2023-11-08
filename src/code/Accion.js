@@ -1,11 +1,11 @@
-var declaracionData;
+var accionData;
 var dataToUpdate = new Array();
 var dataToDelete = new Array();
-/* sheetName
-   range */
+const nombreHojaAccion = 'ACCIONES';
+const rangoAccion = `${nombreHojaAccion}!A1:K`;
 
-class Declaracion {
-    constructor({id, fecha, tipo_accion, id_area, descripcion, causa_raiz, impacto_cliente_sgc, id_usuario}) {
+class Accion {
+    constructor({id, fecha, tipo_accion, id_area, descripcion, causa_raiz, impacto_cliente_sgc, id_usuario,fecha_cierre, evalucion_efectividad, id_aprueba}) {
         this.id = id;
         this.fecha = fecha;
         this.tipo_accion = tipo_accion;
@@ -14,19 +14,22 @@ class Declaracion {
         this.causa_raiz = causa_raiz;
         this.impacto_cliente_sgc = impacto_cliente_sgc;
         this.id_usuario = id_usuario;
+        this.fecha_cierre = fecha_cierre;
+        this.evalucion_efectividad = evalucion_efectividad;
+        this.id_aprueba = id_aprueba;
     }
     static async getHeaders() {
-        let headers = (await loadedResourses(rangoDeclaracion))[0].map(item => item.toLocaleLowerCase());
+        let headers = (await loadedResourses(rangoAccion))[0].map(item => item.toLocaleLowerCase());
         return headers
     }
     static async getAllData() {
-        let response = await loadedResourses(rangoDeclaracion);
-        declaracionData = arrayToObject(response);
-        return declaracionData
+        let response = await loadedResourses(rangoAccion);
+        accionData = arrayToObject(response);
+        return accionData
     }
     static async createId() {
         try {
-            let response = await loadedResourses(rangoDeclaracion);
+            let response = await loadedResourses(rangoAccion);
             response.shift()
             let ids = response.map(item => {
                 if(item[0]===undefined){
@@ -48,11 +51,11 @@ class Declaracion {
         try {
             data['fecha'] = getDate()
             data['id'] = await this.createId();
-            const headers = await this.getHeaders()
-            const newDeclaracion = new Declaracion(data);
-            const newData = objectToArray(newDeclaracion, headers);
-            await postData(rangoDeclaracion, newData);
-            return newDeclaracion;
+            const headers = await this.getHeaders();
+            const newAccion = new Accion(data);
+            const newData = objectToArray(newAccion, headers);
+            await postData(rangoAccion, newData);
+            return newAccion;
         } catch (error) {
             // Manejo de errores
             console.error("Error:", error);
@@ -62,8 +65,8 @@ class Declaracion {
     // Función para leer (obtener) información de un área
     static async readById(id) {
         try {
-            declaracionData = await this.getAllData()            
-            let idInformation = declaracionData.find(area => area.id === id)
+            accionData = await this.getAllData()            
+            let idInformation = accionData.find(accion => accion.id === id)
             return idInformation
         }
         catch (error) {
@@ -75,16 +78,16 @@ class Declaracion {
     // Función para actualizar el nombre de un área por su ID
     static async updateById(id, values) {
         try {
-            declaracionData = await this.getAllData()
-            let row = findIndexById(id,declaracionData) + 2
+            accionData = await this.getAllData()
+            let row = findIndexById(id,accionData) + 2
             for (let item in values) {
                 dataToUpdate.push({
                     row: row,
-                    column: findIndexByKey(item,declaracionData),
+                    column: findIndexByKey(item,accionData),
                     value: values[item]
                 })
             }
-            let data = createdDataToUpdate(dataToUpdate, nombreHojaDeclaracion);
+            let data = createdDataToUpdate(dataToUpdate, nombreHojaAccion);
             let success = await updateData(data);
             return success
         }
@@ -97,13 +100,13 @@ class Declaracion {
     // Función para eliminar un área por su ID
     static async deleteById(id) {
         try {
-            let declaracionData = await this.getAllData();
+            let accionData = await this.getAllData();
             let header = await this.getHeaders();
             dataToDelete.push({
-                row: findIndexById(id,declaracionData) + 2,
+                row: findIndexById(id,accionData) + 2,
                 lastColumn: header.length,
             })
-            let ranges = createdDataToDelete(dataToDelete, nombreHojaDeclaracion)
+            let ranges = createdDataToDelete(dataToDelete, nombreHojaAccion)
             let success = await deleteData(ranges);
             return success
         }

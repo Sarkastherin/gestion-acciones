@@ -1,0 +1,14 @@
+#btn-icon {
+    cursor: pointer;
+}
+.card-slide-item {
+    display: none;
+}
+.card-slide-item--active {
+    position:relative;
+	animation:animateright 1.5s
+}
+@keyframes animateright {
+	from{right:-100px;opacity:0} 
+	to{right:0;opacity:1}
+}

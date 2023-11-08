@@ -1,0 +1,256 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Gestión de Acciones</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    <link rel="icon" href="./assets/icons/control-de-calidad.png" type="image/png">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="./assets/css/style.css">
+    <link rel="stylesheet" href="./assets/css/design.css">
+    <script src="./code/credential.js"></script>
+</head>
+
+<body id="crear_ac">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-6">
+                <form class= "row g-2 mt-2">
+                    <h4 class="my-3">Declaración & Análisis</h4>
+                    <div class="col-12">
+                        <label class="col-form-label-sm text-secondary">Tipo de acción</label>
+                        <select class="form-select form-select-sm" id="tipo_accion" required>
+                            <option>Tipo de acción</option>
+                            <option value="No conformidad" selected>No conformidad</option>
+                            <option value="Oportunidad de mejora">Oportunidad de mejora</option>
+                            <option value="Acción frente al riesgo">Acción frente al riesgo</option>
+                        </select>
+                    </div>
+                    <div class="col-12">
+                        <label class="col-form-label-sm text-secondary">Área o Proceso</label>
+                        <select class="form-select form-select-sm" id="id_area" required>
+                            <option selected>Ventas</option>
+                        </select>
+                    </div>
+                    <div class="col-12">
+                        <label class="col-form-label-sm text-secondary">Elaboró</label>
+                        <select class="form-select form-select-sm" id="id_usuario" required>
+                            <option selected>María Gimenez</option>
+                        </select>
+                    </div>
+                    <div class="col-12">
+                        <label class="col-form-label-sm text-secondary">Situación</label>
+                        <textarea class="form-control form-control-sm"  rows="2" required>Producto entregado incompleto</textarea>
+                    </div>
+                    
+                    <div class="col-12">
+                        <label class="col-form-label-sm text-secondary">Indique la causa raíz</label>
+                        <textarea class="form-control form-control-sm"  rows="2" required>Proceso de verificación deficiente</textarea>
+                    </div>
+                    <div class="col-12">
+                        <label class="col-form-label-sm text-secondary">Impacto en el cliente y en el S.G.C</label>
+                        <textarea class="form-control form-control-sm"  rows="2" required>Impacto en la satisfacción del cliente</textarea>
+                    </div>
+                </form>  
+            </div>
+            <div class="col-lg-6"><!-- Programa de acción -->
+                <form class= "row g-2 mt-3">
+                    <div class="d-flex justify-content-between">
+                        <h4>Programa de acción</h4>
+                        <button type="button" class="btn btn-sm btn-outline-dark">Agregar
+                            <i class="bi bi-plus-lg"></i>
+                        </button>
+                    </div>
+                    <div class="container p-2 mt-3 border card-slide-item--active" id="1">
+                        <div class="d-flex justify-content-between">
+                            <h5>Acción # 22</h5>
+                            <button type="button" class="btn btn-danger btn-sm">
+                                <i class="bi bi-trash-fill plan_ac_1"></i>
+                            </button>
+                        </div>
+                        <div class="row g-1" >
+                            <div class="col-12">
+                                <label class="col-form-label-sm text-secondary">Propuesta</label>
+                                <textarea class="form-control form-control-sm" rows="2" required>Revisión exhaustiva del proceso de verificación para identificar fallas y puntos débiles.
+                                </textarea>
+                            </div>
+                            <div class="col-6">
+                                <label class="col-form-label-sm text-secondary">Responsable</label>
+                                <select class="form-select form-select-sm" id="id_usuario" required>
+                                    <option selected>Juan Doe</option>
+                                </select>
+                            </div>
+                            <div class="col-6">
+                                <label class="col-form-label-sm text-secondary">Fecha plan</label>
+                                <input class="form-control form-control-sm" type="date" value="2023-01-06">
+                            </div>
+                            <div class="col-12">
+                                <label class="col-form-label-sm text-secondary">Metodología de Verificación</label>
+                                <textarea class="form-control form-control-sm" rows="2" required>Comparación de los resultados de verificación antes y después de las correcciones.
+                                </textarea>
+                            </div>
+                        </div>
+                        <div class="row g-1" >
+                            <div class="col-12">
+                                <label class="col-form-label-sm text-secondary">Acción</label>
+                                <textarea class="form-control form-control-sm" rows="2" required>Se realizaron pruebas exhaustivas en el proceso de verificación para identificar y corregir fallas.
+                                </textarea>
+                            </div>
+                            <div class="col-6">
+                                <label class="col-form-label-sm text-secondary">Quien ejecutó</label>
+                                <select class="form-select form-select-sm" id="id_usuario" required>
+                                    <option selected>Marta Doe</option>
+                                </select>
+                            </div>
+                            <div class="col-6">
+                                <label class="col-form-label-sm text-secondary">Fecha ejecución</label>
+                                <input class="form-control form-control-sm" type="date" value="2023-01-12">
+                            </div>
+                        <div class="col-12">
+                            <label class="col-form-label-sm text-secondary">Resultados de Verificación</label>
+                            <textarea class="form-control form-control-sm" rows="2" required>El proceso de verificación ha mejorado, con menos fallas identificadas en las pruebas.
+                            </textarea>
+                        </div>
+                        </div>
+                    </div>
+                    <div class="container p-2 mt-3 border card-slide-item" id="2">
+                        <div class="d-flex justify-content-between">
+                            <h5>Acción # 23</h5>
+                            <button type="button" class="btn btn-danger btn-sm">
+                                <i class="bi bi-trash-fill plan_ac_1"></i>
+                            </button>
+                        </div>
+                        <div class="row g-1" >
+                            <div class="col-12">
+                                <label class="col-form-label-sm text-secondary">Propuesta</label>
+                                <textarea class="form-control form-control-sm" rows="2" required>Revisión exhaustiva del proceso de verificación para identificar fallas y puntos débiles.
+                                </textarea>
+                            </div>
+                            <div class="col-6">
+                                <label class="col-form-label-sm text-secondary">Responsable</label>
+                                <select class="form-select form-select-sm" id="id_usuario" required>
+                                    <option selected>Juan Doe</option>
+                                </select>
+                            </div>
+                            <div class="col-6">
+                                <label class="col-form-label-sm text-secondary">Fecha plan</label>
+                                <input class="form-control form-control-sm" type="date" value="2023-01-06">
+                            </div>
+                            <div class="col-12">
+                                <label class="col-form-label-sm text-secondary">Metodología de Verificación</label>
+                                <textarea class="form-control form-control-sm" rows="2" required>Comparación de los resultados de verificación antes y después de las correcciones.
+                                </textarea>
+                            </div>
+                        </div>
+                        <div class="row g-1" >
+                            <div class="col-12">
+                                <label class="col-form-label-sm text-secondary">Acción</label>
+                                <textarea class="form-control form-control-sm" rows="2" required>Se realizaron pruebas exhaustivas en el proceso de verificación para identificar y corregir fallas.
+                                </textarea>
+                            </div>
+                            <div class="col-6">
+                                <label class="col-form-label-sm text-secondary">Quien ejecutó</label>
+                                <select class="form-select form-select-sm" id="id_usuario" required>
+                                    <option selected>Marta Doe</option>
+                                </select>
+                            </div>
+                            <div class="col-6">
+                                <label class="col-form-label-sm text-secondary">Fecha ejecución</label>
+                                <input class="form-control form-control-sm" type="date" value="2023-01-12">
+                            </div>
+                        <div class="col-12">
+                            <label class="col-form-label-sm text-secondary">Resultados de Verificación</label>
+                            <textarea class="form-control form-control-sm" rows="2" required>El proceso de verificación ha mejorado, con menos fallas identificadas en las pruebas.
+                            </textarea>
+                        </div>
+                        </div>
+                    </div>
+                    <div class="container p-2 mt-3 border card-slide-item" id="3">
+                        <div class="d-flex justify-content-between">
+                            <h5>Acción # 24</h5>
+                            <button type="button" class="btn btn-danger btn-sm">
+                                <i class="bi bi-trash-fill plan_ac_1"></i>
+                            </button>
+                        </div>
+                        <div class="row g-1" >
+                            <div class="col-12">
+                                <label class="col-form-label-sm text-secondary">Propuesta</label>
+                                <textarea class="form-control form-control-sm" rows="2" required>Revisión exhaustiva del proceso de verificación para identificar fallas y puntos débiles.
+                                </textarea>
+                            </div>
+                            <div class="col-6">
+                                <label class="col-form-label-sm text-secondary">Responsable</label>
+                                <select class="form-select form-select-sm" id="id_usuario" required>
+                                    <option selected>Juan Doe</option>
+                                </select>
+                            </div>
+                            <div class="col-6">
+                                <label class="col-form-label-sm text-secondary">Fecha plan</label>
+                                <input class="form-control form-control-sm" type="date" value="2023-01-06">
+                            </div>
+                            <div class="col-12">
+                                <label class="col-form-label-sm text-secondary">Metodología de Verificación</label>
+                                <textarea class="form-control form-control-sm" rows="2" required>Comparación de los resultados de verificación antes y después de las correcciones.
+                                </textarea>
+                            </div>
+                        </div>
+                        <div class="row g-1" >
+                            <div class="col-12">
+                                <label class="col-form-label-sm text-secondary">Acción</label>
+                                <textarea class="form-control form-control-sm" rows="2" required>Se realizaron pruebas exhaustivas en el proceso de verificación para identificar y corregir fallas.
+                                </textarea>
+                            </div>
+                            <div class="col-6">
+                                <label class="col-form-label-sm text-secondary">Quien ejecutó</label>
+                                <select class="form-select form-select-sm" id="id_usuario" required>
+                                    <option selected>Marta Doe</option>
+                                </select>
+                            </div>
+                            <div class="col-6">
+                                <label class="col-form-label-sm text-secondary">Fecha ejecución</label>
+                                <input class="form-control form-control-sm" type="date" value="2023-01-12">
+                            </div>
+                        <div class="col-12">
+                            <label class="col-form-label-sm text-secondary">Resultados de Verificación</label>
+                            <textarea class="form-control form-control-sm" rows="2" required>El proceso de verificación ha mejorado, con menos fallas identificadas en las pruebas.
+                            </textarea>
+                        </div>
+                        </div>
+                    </div>
+                    <div class="d-flex justify-content-evenly">
+                        <button type="button" class="btn fs-4">
+                            <i class="bi bi-arrow-left-circle-fill btn-icon" id="previewAction"></i>
+                        </button>
+                        <button type="button" class="btn fs-4">
+                            <i class="bi bi-arrow-right-circle-fill btn-icon" id="nextAction"></i>
+                        </button>
+                    </div>     
+                </form>
+            </div>
+        </div>
+        <div class="row" hidden>
+            <div class="col-12 my-3">
+                <div class="d-flex justify-content-between">
+                    <h3 class="text">Conslusiones</h3>
+                    <button type="button" class="btn btn-outline-dark">Agregar
+                        <i class="bi bi-plus-lg"></i>
+                    </button>
+                </div>
+
+                <form class="mt-3">
+                    <textarea class="form-control mb-2" id="evalucion_efectividad" rows="2"
+                        placeholder="Evaluación de efectividad" required></textarea>
+                    <select class="form-select mb-2" id="aprueba" required>
+                        <option selected>Aprobado por</option>
+                    </select>
+                </form>
+            </div>
+        </div>
+    </div>
+    <script src="./code/index.js"></script>
+</body>
+
+</html>

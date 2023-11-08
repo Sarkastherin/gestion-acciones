@@ -2,18 +2,20 @@ const navbar = document.querySelector('#navbar')
 const module = document.getElementsByTagName('body')
 const nameIdModule = module[0].attributes.id.nodeValue;
 const content = document.querySelector('main');
-const nombreHojaDeclaracion = 'DECLARACIÓN & ANÁLISIS';
-const rangoDeclaracion = `${nombreHojaDeclaracion}!A1:H`;
+
 const nombreHojaUsuario = 'USUARIOS'
 const rangoUsuarios = `${nombreHojaUsuario}!A1:E`;
 const nombreHojaArea = 'AREAS'
 const rangoAreas = `${nombreHojaArea}!A1:B`;
 const nombreHojaPrograma = 'PROGRAMA DE ACCIÓN';
 const rangoPrograma = `${nombreHojaPrograma}!A1:K`;
+const nombreHojaConslusion = 'CONCLUSIONES';
+const rangoConslusion = `${nombreHojaConslusion}!A1:D`;
 const tableActions = document.getElementById('table_accion');
 const prevButton = document.getElementById('prevPage');
 const nextButton = document.getElementById('nextPage');
-const footPage = document.getElementById('footPage')
+const footPage = document.getElementById('footPage');
+let x;
 let dataReverse;
 let cantPag;
 let headersDeclaracion;
@@ -111,18 +113,17 @@ async function deleteData(ranges) {
 const itemsPerPage = 10;
 let currentPage = 0;
 async function loadedWindow() {
-  content.removeAttribute('hidden', '');
-  let test = await Programa.deleteById('4')
-  console.log(test)
   try {
-    let data = await loadedResourses(rangoDeclaracion);
-    areas = await loadedResourses(rangoAreas)
-    headersDeclaracion = data.shift();
+    areas = await loadedResourses(rangoAreas);
+    content.removeAttribute('hidden', '');
+    let data = await Accion.getAllData()
     dataReverse = data.reverse();
-    tableActions.innerHTML = '';
-    loadTablePage(currentPage, dataReverse)
+      response = await fetch('../src/crear_ac.html');
+      response = await response.text();
+      document.querySelector('#home').innerHTML = response;
+    //loadTablePage(currentPage, dataReverse)
   } catch (e) {
-    console.log(e)
+
   }
 }
 
@@ -131,17 +132,16 @@ function loadTablePage(page, data) {
   const end = start + itemsPerPage;
   tableActions.innerHTML = '';
   for (let i = start; i < end && i < data.length; i++) {
-    let area = getArea(data[i][3]);
-    area = area[0]
+    let area = getArea(data[i].id_area)[0];
     tableActions.innerHTML += `
       <tr>
-        <th class="cell-center" scope="row">${data[i][0]}</th>
-        <td class="cell-center">${data[i][1]}</td>
-        <td class="">${data[i][2]}</td>
+        <th class="cell-center" scope="row">${data[i].id}</th>
+        <td class="cell-center">${data[i].fecha}</td>
+        <td class="">${data[i].tipo_accion}</td>
         <td class="">${area[1]}</td>
-        <td>${data[i][4]}</td>
+        <td>${data[i].descripcion}</td>
         <td class="cell-center">
-        <i class="bi bi-pen-fill btn-icon" data-bs-toggle="modal" data-bs-target="#Modal" onclick="editAct(event)" id="${data[i][0]}"></i>
+        <i class="bi bi-pen-fill btn-icon" data-bs-toggle="modal" data-bs-target="#Modal" onclick="editAct(event)" id="${data[i].id}"></i>
           
         </td>
       </tr>`
@@ -181,7 +181,7 @@ async function loadTableFilter() {
     key_word: document.getElementById('find_by_key_word').value
   }
   try {
-    let data = await loadedResourses(rangoDeclaracion);
+    let data = await loadedResourses(rangoAccion);
     data.shift();
     data = data.filter(item => {
       /* ID | ACCIÓN | ÁREA | KEY */
@@ -200,15 +200,11 @@ async function loadTableFilter() {
   }
 }
 async function editAct(event) {
-  var id = event.target.id
-  var dataFromId;
+  console.log(event.target.id)
   try {
-    dataFromId = dataReverse.filter(item => {
-      return item[0] === id
-    })
-    dataFromId = dataFromId[0]
-    idToEdit = dataFromId[0]
-    await load(dataFromId, headersDeclaracion)
+    response = await fetch('../src/crear_ac.html');
+    response = await response.text();
+    document.querySelector('.modal-body').innerHTML = response;
   } catch (e) {
   }
 }
@@ -242,18 +238,19 @@ function getArea(id) {
 }
 /* Funciones para el manejo de clases */
 function objectToArray(obj, arr) {
+  console.log(arr.includes('fecha'))
   for (item in obj) {
-      if (arr.includes(item)) {
+    if (arr.includes(item)) {
       arr[arr.indexOf(item)] = obj[item]
-      }
+    }
   }
   return arr
 }
 function findIndexById(id, array) {
   for (let i = 0; i < array.length; i++) {
-      if (array[i].id === id) {
-          return i; // Devuelve el índice donde se encuentra el id
-      }
+    if (array[i].id === id) {
+      return i; // Devuelve el índice donde se encuentra el id
+    }
   }
   return -2; // Si no se encuentra el id, retorna -2
 }
@@ -269,13 +266,13 @@ function arrayToObject(arr) {
   var newData = [];
   // Iteramos desde 1 para evitar el primer elemento que son los encabezados
   for (var i = 1; i < arr.length; i++) {
-      var obj = {};
-      // Iteramos a través de cada elemento del array actual
-      for (var j = 0; j < headers.length; j++) {
-          // Usamos los encabezados como claves y asignamos los valores correspondientes
-          obj[headers[j].toLowerCase()] = arr[i][j];
-      }
-      newData.push(obj); // Agregamos el objeto al nuevo array
+    var obj = {};
+    // Iteramos a través de cada elemento del array actual
+    for (var j = 0; j < headers.length; j++) {
+      // Usamos los encabezados como claves y asignamos los valores correspondientes
+      obj[headers[j].toLowerCase()] = arr[i][j];
+    }
+    newData.push(obj); // Agregamos el objeto al nuevo array
   }
   return newData; // Devolvemos el nuevo array de objetos
 }
