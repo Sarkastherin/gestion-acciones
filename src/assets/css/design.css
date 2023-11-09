@@ -9,6 +9,6 @@
 	animation:animateright 1.5s
 }
 @keyframes animateright {
-	from{right:-100px;opacity:0} 
+	from{right:-50px;opacity:0} 
 	to{right:0;opacity:1}
 }
