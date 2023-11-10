@@ -1,4 +1,3 @@
-const navbar = document.querySelector('#navbar')
 const module = document.getElementsByTagName('body')
 const nameIdModule = module[0].attributes.id.nodeValue;
 const content = document.querySelector('main');
@@ -7,35 +6,19 @@ const nombreHojaUsuario = 'USUARIOS'
 const rangoUsuarios = `${nombreHojaUsuario}!A1:E`;
 const nombreHojaArea = 'AREAS'
 const rangoAreas = `${nombreHojaArea}!A1:B`;
-const nombreHojaPrograma = 'PROGRAMA DE ACCIÓN';
-const rangoPrograma = `${nombreHojaPrograma}!A1:K`;
+
 const nombreHojaConslusion = 'CONCLUSIONES';
 const rangoConslusion = `${nombreHojaConslusion}!A1:D`;
 const tableActions = document.getElementById('table_accion');
 const prevButton = document.getElementById('prevPage');
 const nextButton = document.getElementById('nextPage');
 const footPage = document.getElementById('footPage');
-let x;
+let usuarios;
+let id
 let dataReverse;
 let cantPag;
-let headersDeclaracion;
 let areas;
-let idToEdit;
-function loadNavbar() {
-  navbar.innerHTML = `
-    <nav class="d-flex justify-content-between">
-        <div class="nav-brand d-flex align-items-center">
-            <img src="./assets/icons/control-de-calidad.png" alt="logo" class="h-100">
-            <a href="./index.html" class="nav-brand-text" id="link_home">Gestión de acciones</a>
-        </div>
-        <ul class="nav-menu ">
-            <li><a href="./crear_ac.html" class="nav-link" id="link_crear_ac">Crear acción</a></li>
-            <li><a href="./gestionar_ac.html" class="nav-link" id="link_gestionar_ac">Gestionar acción</a></li>
-        </ul>
-    </nav>` ;
-  let linkActive = document.getElementById(`link_${nameIdModule}`);
-  linkActive.classList.add('nav-link-active')
-}
+//let idToEdit;
 async function loadedResourses(range) {
   let response;
   try {
@@ -118,15 +101,11 @@ async function loadedWindow() {
     content.removeAttribute('hidden', '');
     let data = await Accion.getAllData()
     dataReverse = data.reverse();
-      response = await fetch('../src/crear_ac.html');
-      response = await response.text();
-      document.querySelector('#home').innerHTML = response;
-    //loadTablePage(currentPage, dataReverse)
+    loadTablePage(currentPage, dataReverse)
   } catch (e) {
 
   }
 }
-
 function loadTablePage(page, data) {
   const start = page * itemsPerPage;
   const end = start + itemsPerPage;
@@ -141,7 +120,7 @@ function loadTablePage(page, data) {
         <td class="">${area[1]}</td>
         <td>${data[i].descripcion}</td>
         <td class="cell-center">
-        <i class="bi bi-pen-fill btn-icon" data-bs-toggle="modal" data-bs-target="#Modal" onclick="editAct(event)" id="${data[i].id}"></i>
+        <i class="bi bi-pen-fill btn-icon" data-bs-toggle="modal" data-bs-target="#Modal" onclick="readyAction(event)" id="${data[i].id}"></i>
           
         </td>
       </tr>`
@@ -199,14 +178,71 @@ async function loadTableFilter() {
     console.log(e)
   }
 }
-async function editAct(event) {
-  console.log(event.target.id)
+/* Leer Tarjeta de Acciones */
+async function readyAction(event) {
+  id = event.target.id
+  usuarios = await Usuario.getAllData();
   try {
     response = await fetch('../src/crear_ac.html');
     response = await response.text();
     document.querySelector('.modal-body').innerHTML = response;
+    let accion = await Accion.readById(id)
+    let programa = await Programa.readByIdAction(id)
+    let areas = await Area.getAllData();
+    loadInputsSelect('id_area', areas)
+    loadInputsSelect('id_usuario', usuarios);
+    loadInputsSelect('id_aprueba', usuarios);
+    for (item in accion) {
+      if (item.startsWith('fecha')) {
+        accion[item] = dateForInput(accion[item])
+      }
+      let testData = !!document.getElementById(item);
+      if (testData) {
+        document.getElementById(item).value = accion[item]
+      }
+    }
+    for (elem of programa) {
+      let id = addActionPlan();
+      document.getElementById(`id_${id}`).innerText = elem.id
+      for(item in elem){
+        if (item.startsWith('fecha')) {
+          elem[item] = dateForInput(elem[item])
+        }
+        let testData = !!document.getElementById(`${item}_${id}`)
+        if(testData) {
+          document.getElementById(`${item}_${id}`).value = elem[item]
+        }
+      }
+    }
   } catch (e) {
+  } finally {
+    let containerEdicion = document.getElementById('containerEdicion');
+    listenerChangeEvent(containerEdicion)
+    containerEdicion.removeAttribute('hidden')
+    
   }
+}
+function listenerChangeEvent(body) {
+  let list = body.querySelectorAll('.form-select, .form-control')
+  list.forEach(item => {
+    item.addEventListener('change', (event) => {
+      console.log(event.target.value)
+    })
+  })
+}
+/* Actualizar Acción */
+async function updateAction() {
+  console.log(id)
+}
+async function loadInputsSelect(idInput, data) {
+  let input = document.getElementById(idInput);
+  data.map(item => {
+    let option = document.createElement('option');
+    let textOption = document.createTextNode(item.nombre);
+    option.appendChild(textOption);
+    option.setAttribute('value', item.id);
+    input.appendChild(option)
+  })
 }
 function createdDataToUpdate(arr, sheet) {
   /* arr = [{row, colum, value}] */
@@ -277,10 +313,18 @@ function arrayToObject(arr) {
   return newData; // Devolvemos el nuevo array de objetos
 }
 function getDate() {
-  let date = new Date();
-  let day = date.getDate();
-  let month = date.getMonth() + 1;
-  let year = date.getFullYear()
-  let today = `${day}/${month}/${year}`;
-  return today
+  var fecha = new Date(); //Fecha actual
+  var mes = fecha.getMonth() + 1; //obteniendo mes
+  var dia = fecha.getDate(); //obteniendo dia
+  var ano = fecha.getFullYear(); //obteniendo año
+  if (dia < 10)
+    dia = '0' + dia; //agrega cero si el menor de 10
+  if (mes < 10)
+    mes = '0' + mes //agrega cero si el menor de 10
+  return `${dia}/${mes}/${ano}`
+}
+function dateForInput(date) {
+  let splitDate = date.split('/');
+  let newFormatDate = `${splitDate[2]}-${splitDate[1]}-${splitDate[0]}`
+  return newFormatDate
 }

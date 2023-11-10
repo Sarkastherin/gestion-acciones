@@ -1,138 +1,91 @@
 <body id="crear_ac">
-    <div class="container-fluid mt-3">
+    <div class="container" id="containerEdicion" hidden>
         <div class="row">
-            <div class="col-lg-6 col-12 my-3">
-                <div class="row">
-                    <h3>Declaración & Análisis</h3>
-                </div>
-                <form class="mt-3">
-                    <label for="tipo_accion" class="form-label text-primary mt-3">Tipo de acción</label>
-                    <select class="form-select getInput" id="tipo_accion" required>
-                        <option selected>Tipo de acción</option>
-                        <option value="No conformidad">No conformidad</option>
-                        <option value="Oportunidad de mejora">Oportunidad de mejora</option>
-                        <option value="Acción frente al riesgo">Acción frente al riesgo</option>
-                    </select>
-                    <label for="id_area" class="form-label text-primary mt-3">Área o Proceso</label>
-                    <select class="form-select getInput" id="id_area" required>
-                        <option selected>Área o Proceso</option>
-                    </select>
-                    <label for="descripcion" class="form-label text-primary mt-3">Describa la situación</label>
-                    <textarea class="form-control getInput" id="descripcion" rows="1"
-                        placeholder="Describa la situación" required></textarea>
-                    <label for="causa_raiz" class="form-label text-primary mt-3">Indique la causa raíz</label>
-                    <textarea class="form-control getInput" id="causa_raiz" rows="1" placeholder="Indique la causa raíz"
-                        required></textarea>
-                    <label for="impacto_cliente_sgc" class="form-label text-primary mt-3">Impacto en el cliente y en el
-                        S.G.C</label>
-                    <textarea class="form-control getInput" id="impacto_cliente_sgc" rows="1"
-                        placeholder="Impacto en el cliente y en el S.G.C"></textarea>
-                    <label for="id_usuario" class="form-label text-primary mt-3">Elaboró</label>
-                    <select class="form-select getInput" id="id_usuario" required>
-                        <option selected>Elaboró</option>
-                    </select>
-                </form>
-            </div>
-            <div class="col-lg-6 col-12">
-                <div class="row">
-                    <div class="col-12 my-3 section-plan">
-                        <div class="d-flex justify-content-between section-plan-title">
-                            <h3 class="text">Plan de acción</h3>
-                            <button type="button" class="btn btn-outline-dark section-plan-btn-add"
-                                onclick="addPlanning(num)">Agregar
-                                <i class="bi bi-plus-lg"></i>
-                            </button>
-                        </div>
-                        <form class="mt-3 form-plan-action" id="planAccion_form">
-                            <div class="col col num_plan_ac_1 plan-action">
-                                <div class="row mb-2 plan-action-header">
-                                    <div class="col">
-                                        <p class="lead plan-action-title"><strong>Acción Planificada 1</strong></p>
-                                    </div>
-                                    <div class="col-auto">
-                                        <button type="button"
-                                            class="btn btn-danger btn-sm plan_ac_1 plan-action-btn-del"
-                                            onclick="removePlan(event)">
-                                            <i class="bi bi-trash-fill plan_ac_1"></i>
-                                        </button>
-                                    </div>
-                                </div>
-                                <label for="accion_a_tomar_1" class="form-label text-primary mt-3">Acción planificada</label>
-                                <textarea class="form-control mb-2 plan-action-descrip plan-action-item_1"
-                                    id="accion_a_tomar_1" rows="2" placeholder="Acción a tomar"
-                                    required></textarea>
-                                <div class="row g-2">
-                                    <div class="col">
-                                        <label for="responsable_ac_1" class="form-label text-primary mt-3">Responsable</label>
-                                        <select class="form-select mb-2 plan-action-resp plan-action-item_1"
-                                            id="responsable_ac_1" required>
-                                            <option selected>Responsable</option>
-                                            <option value="Juan Doe">Juan Doe</option>
-                                            <option value="Jaen Doe">Jaen Doe</option>
-                                        </select>
-                                    </div>
-                                    <div class="col">
-                                        <label for="fecha_plan_1" class="form-label text-primary mt-3">Fecha de implementación</label>
-                                        <input type="date" id="fecha_plan_1" class="form-control plan-action-fplan plan-action-item__1">
-                                    </div>
-                                    <label for="accion_a_tomar_1" class="form-label text-primary mt-3">Acción tomada</label>
-                                <textarea class="form-control mb-2 plan-action-descrip plan-action-item_1"
-                                    id="accion_a_tomar_1" rows="2" placeholder="Acción a tomar"
-                                    required></textarea>
-                                </div>
-                            </div>
-                        </form>
+            <div class="col-lg-6">
+                <form class= "row g-2 mt-2">
+                    <h4 class="my-3">Declaración & Análisis</h4>
+                    <div class="col-md-6 col-12">
+                        <label for="tipo_accion" class="col-form-label-sm text-secondary">Tipo de acción</label>
+                        <select id="tipo_accion" class="form-select form-select-sm input-accion" required>
+                            <option selected>Tipo de acción</option>
+                            <option value="No conformidad">No conformidad</option>
+                            <option value="Oportunidad de mejora">Oportunidad de mejora</option>
+                            <option value="Acción frente al riesgo">Acción frente al riesgo</option>
+                        </select>
                     </div>
-                    <div class="col-12 my-3">
-                        <div class="d-flex justify-content-between">
-                            <h3 class="text">Acción & Verificación</h3>
-                            <button type="button" class="btn btn-outline-dark">Agregar
-                                <i class="bi bi-plus-lg"></i>
-                            </button>
-                        </div>
-                        <form class="mt-3">
-                            <div class="col" hidden>
-                                <p class="lead"><strong>Acción Tomada 1</strong></p>
-                                <textarea class="form-control mb-2" id="accion_tomada_1" rows="2"
-                                    placeholder="Ación tomada" required></textarea>
-                                <select class="form-select mb-2" id="responsable_act_1" required>
-                                    <option selected>Responsable</option>
-                                </select>
-                                <textarea class="form-control mb-2" id="resultado_act_1" rows="2"
-                                    placeholder="Resultado de verificación" required></textarea>
-                            </div>
-                            <div class="col" hidden>
-                                <p class="lead"><strong>Acción Tomada 2</strong></p>
-                                <textarea class="form-control mb-2" id="accion_tomada_2" rows="2"
-                                    placeholder="Ación tomada" required></textarea>
-                                <select class="form-select mb-2" id="responsable_act_2" required>
-                                    <option selected>Responsable</option>
-                                </select>
-                                <textarea class="form-control mb-2" id="resultado_act_2" rows="2"
-                                    placeholder="Resultado de verificación" required></textarea>
-                            </div>
-                        </form>
+                    <div class="col-md-6 col-12">
+                        <label for="id_area" class="col-form-label-sm text-secondary">Área o Proceso</label>
+                        <select id="id_area" class="form-select form-select-sm input-accion" required>
+                            <option selected></option>
+                        </select>
                     </div>
-                </div>
+                    <div class="col-12">
+                        <label for="id_usuario" class="col-form-label-sm text-secondary">Elaboró</label>
+                        <select id="id_usuario" class="form-select form-select-sm input-accion" required>
+                            <option selected></option>
+                        </select>
+                    </div>
+                    <div class="col-12">
+                        <label for="descripcion" class="col-form-label-sm text-secondary">Situación</label>
+                        <textarea id="descripcion" class="form-control form-control-sm input-accion"  rows="2" required></textarea>
+                    </div>
+                    <div class="col-12">
+                        <label for="causa_raiz" class="col-form-label-sm text-secondary">Indique la causa raíz</label>
+                        <textarea id="causa_raiz" class="form-control form-control-sm input-accion"  rows="2" required></textarea>
+                    </div>
+                    <div class="col-12">
+                        <label for="impacto_cliente_sgc" class="col-form-label-sm text-secondary">Impacto en el cliente y en el S.G.C</label>
+                        <textarea id="impacto_cliente_sgc" class="form-control form-control-sm input-accion"  rows="2" required></textarea>
+                    </div>
+                </form>  
             </div>
-        </div>
-        <div class="row">
-            <div class="col-12 my-3">
-                <div class="d-flex justify-content-between">
-                    <h3 class="text">Conslusiones</h3>
-                    <button type="button" class="btn btn-outline-dark">Agregar
-                        <i class="bi bi-plus-lg"></i>
-                    </button>
-                </div>
-
-                <form class="mt-3" hidden>
-                    <textarea class="form-control mb-2" id="evalucion_efectividad" rows="2"
-                        placeholder="Evaluación de efectividad" required></textarea>
-                    <select class="form-select mb-2" id="aprueba" required>
-                        <option selected>Aprobado por</option>
-                    </select>
+            <div class="col-lg-6"><!-- Programa de acción -->
+                <form class= "row g-2 mt-3">
+                    <div class="d-flex justify-content-between">
+                        <h4>Programa de acción</h4>
+                        <button type="button" class="btn btn-sm btn-outline-dark" onclick="addActionPlan()">Agregar
+                            <i class="bi bi-plus-lg"></i>
+                        </button> 
+                    </div>
+                    <div id="actionProgram">
+                    </div>
+                    <div class="d-flex justify-content-evenly">
+                        <button type="button" class="btn fs-4">
+                            <i class="bi bi-arrow-left-circle-fill btn-icon" onclick="fPreviewAction()"></i>
+                        </button>
+                        <button type="button" class="btn fs-4">
+                            <i class="bi bi-arrow-right-circle-fill btn-icon" onclick="fNextAction()"></i>
+                        </button>
+                    </div>     
                 </form>
             </div>
         </div>
+        <hr>
+        <form class="row g-2 mt-3">
+            <div class="d-flex justify-content-between">
+                <h4 class="text">Cierre</h4>
+                <button type="button" class="btn btn-sm btn-outline-dark">Agregar
+                    <i class="bi bi-plus-lg"></i>
+                </button>
+            </div>
+            <div class="col-lg-9 col-12">
+                <label for="evalucion_efectividad" class="col-form-label-sm text-secondary">Evaluación de efectividad</label>
+                <textarea id="evalucion_efectividad" class="form-control form-control-sm mb-2" rows="4" required></textarea>
+            </div>
+            <div class="col-lg-3 col-12">
+                <div class="row g-2">
+                    <div class="col-lg-12 col-6">
+                        <label class="col-form-label-sm text-secondary">Aprobado por</label>
+                        <select class="form-select form-select-sm" id="id_aprueba" required>
+                            <option selected></option>
+                        </select>
+                    </div>
+                    <div class="col-lg-12 col-6">
+                        <label for="fecha_cierre" class="col-form-label-sm text-secondary">Fecha cierre</label>
+                        <input id="fecha_cierre" class="form-control form-control-sm" type="date">
+                    </div>
+                </div>
+            </div>
+        </form>
     </div>
 </body>

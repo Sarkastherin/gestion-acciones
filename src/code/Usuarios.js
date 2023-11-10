@@ -8,7 +8,7 @@ class Usuario {
         this.nombre = nombre;
         this.apellido = apellido;
         this.alias = alias;
-        this.rol = rol
+        this.rol = rol;
     }
     static async getHeaders() {
         let headers = (await loadedResourses(rangoUsuarios))[0].map(item => item.toLocaleLowerCase());

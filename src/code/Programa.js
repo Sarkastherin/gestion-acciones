@@ -1,8 +1,8 @@
 var programaData;
 var dataToUpdate = new Array();
 var dataToDelete = new Array();
-/* sheetName
-   range */
+const nombreHojaPrograma = 'PROGRAMA';
+const rangoPrograma = `${nombreHojaPrograma}!A1:K`;
 
 class Programa {
     constructor({ id_accion, id, fecha, acciones_planificadas, id_responsable, fecha_plan, acciones_tomadas, ejecuto_accion, fecha_ejecucion, met_verificacion, res_verificacion }) {

@@ -1,0 +1,21 @@
+{
+  "name": "gestion-acciones",
+  "version": "1.0.0",
+  "description": "Gestión de no conformidades y oportunidades de mejoras",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Sarkastherin/gestion-acciones.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Sarkastherin/gestion-acciones/issues"
+  },
+  "homepage": "https://github.com/Sarkastherin/gestion-acciones#readme",
+  "type": "module"
+}
