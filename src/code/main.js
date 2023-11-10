@@ -183,7 +183,7 @@ async function readyAction(event) {
   id = event.target.id
   usuarios = await Usuario.getAllData();
   try {
-    response = await fetch('../src/crear_ac.html');
+    response = await fetch('../src/card-action.html');
     response = await response.text();
     document.querySelector('.modal-body').innerHTML = response;
     let accion = await Accion.readById(id)
