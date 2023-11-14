@@ -2,7 +2,7 @@
     <div class="container" id="containerEdicion" hidden>
         <div class="row">
             <div class="col-lg-6">
-                <form class= "row g-2 mt-2">
+                <form class= "row g-2 mt-2" id="form-action">
                     <h4 class="my-3">Declaración & Análisis</h4>
                     <div class="col-md-6 col-12">
                         <label for="tipo_accion" class="col-form-label-sm text-secondary">Tipo de acción</label>
@@ -43,7 +43,7 @@
                 <form class= "row g-2 mt-3">
                     <div class="d-flex justify-content-between">
                         <h4>Programa de acción</h4>
-                        <button type="button" class="btn btn-sm btn-outline-dark" onclick="addActionPlan()">Agregar
+                        <button type="button" class="btn btn-sm btn-outline-dark" id="btnAddPlan" onclick="addActionPlan()">Agregar
                             <i class="bi bi-plus-lg"></i>
                         </button> 
                     </div>
@@ -61,7 +61,7 @@
             </div>
         </div>
         <hr>
-        <form class="row g-2 mt-3">
+        <form class="row g-2 mt-3" id="form-cierre">
             <div class="d-flex justify-content-between">
                 <h4 class="text">Cierre</h4>
                 <button type="button" class="btn btn-sm btn-outline-dark">Agregar

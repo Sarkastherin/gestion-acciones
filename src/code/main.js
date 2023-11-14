@@ -14,7 +14,7 @@ const prevButton = document.getElementById('prevPage');
 const nextButton = document.getElementById('nextPage');
 const footPage = document.getElementById('footPage');
 let usuarios;
-let id
+
 let dataReverse;
 let cantPag;
 let areas;
@@ -120,7 +120,7 @@ function loadTablePage(page, data) {
         <td class="">${area[1]}</td>
         <td>${data[i].descripcion}</td>
         <td class="cell-center">
-        <i class="bi bi-pen-fill btn-icon" data-bs-toggle="modal" data-bs-target="#Modal" onclick="readyAction(event)" id="${data[i].id}"></i>
+        <i class="bi bi-pen-fill btn-icon" data-bs-toggle="modal" data-bs-target="#Modal" onclick="openCard(event)" id="${data[i].id}"></i>
           
         </td>
       </tr>`
@@ -178,72 +178,16 @@ async function loadTableFilter() {
     console.log(e)
   }
 }
-/* Leer Tarjeta de Acciones */
-async function readyAction(event) {
-  id = event.target.id
-  usuarios = await Usuario.getAllData();
-  try {
-    response = await fetch('../src/card-action.html');
-    response = await response.text();
-    document.querySelector('.modal-body').innerHTML = response;
-    let accion = await Accion.readById(id)
-    let programa = await Programa.readByIdAction(id)
-    let areas = await Area.getAllData();
-    loadInputsSelect('id_area', areas)
-    loadInputsSelect('id_usuario', usuarios);
-    loadInputsSelect('id_aprueba', usuarios);
-    for (item in accion) {
-      if (item.startsWith('fecha')) {
-        accion[item] = dateForInput(accion[item])
-      }
-      let testData = !!document.getElementById(item);
-      if (testData) {
-        document.getElementById(item).value = accion[item]
-      }
-    }
-    for (elem of programa) {
-      let id = addActionPlan();
-      document.getElementById(`id_${id}`).innerText = elem.id
-      for(item in elem){
-        if (item.startsWith('fecha')) {
-          elem[item] = dateForInput(elem[item])
-        }
-        let testData = !!document.getElementById(`${item}_${id}`)
-        if(testData) {
-          document.getElementById(`${item}_${id}`).value = elem[item]
-        }
-      }
-    }
-  } catch (e) {
-  } finally {
-    let containerEdicion = document.getElementById('containerEdicion');
-    listenerChangeEvent(containerEdicion)
-    containerEdicion.removeAttribute('hidden')
-    
-  }
-}
+
 function listenerChangeEvent(body) {
   let list = body.querySelectorAll('.form-select, .form-control')
   list.forEach(item => {
     item.addEventListener('change', (event) => {
-      console.log(event.target.value)
+      event.target.classList.add('change-save');
     })
   })
 }
-/* Actualizar Acción */
-async function updateAction() {
-  console.log(id)
-}
-async function loadInputsSelect(idInput, data) {
-  let input = document.getElementById(idInput);
-  data.map(item => {
-    let option = document.createElement('option');
-    let textOption = document.createTextNode(item.nombre);
-    option.appendChild(textOption);
-    option.setAttribute('value', item.id);
-    input.appendChild(option)
-  })
-}
+
 function createdDataToUpdate(arr, sheet) {
   /* arr = [{row, colum, value}] */
   let data = new Array()

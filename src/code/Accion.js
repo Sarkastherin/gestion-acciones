@@ -2,7 +2,7 @@ var accionData;
 var dataToUpdate = new Array();
 var dataToDelete = new Array();
 const nombreHojaAccion = 'ACCIONES';
-const rangoAccion = `${nombreHojaAccion}!A1:K`;
+const rangoAccion = `${nombreHojaAccion}!A1:K`; 
 
 class Accion {
     constructor({id, fecha, tipo_accion, id_area, descripcion, causa_raiz, impacto_cliente_sgc, id_usuario,fecha_cierre, evalucion_efectividad, id_aprueba}) {
